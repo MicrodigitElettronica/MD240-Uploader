@@ -22,7 +22,7 @@ import banner
 from gui import HLayout, VLayout, GroupBoxH, GroupBoxV, SpinBox, dark_palette
 from utils import MODULES, NoBinFile, NetworkError
 
-__version__ = '1.2.1'
+__version__ = '0.1'
 
 BINS_URL = 'http://ota.tasmota.com'
 
@@ -35,7 +35,7 @@ class ESPWorker(QObject):
     def __init__(self, port, actions, **params):
         super().__init__()
         self.command = [
-                      '--chip', 'esp8266',
+                      '--chip', 'esp32',
                       '--port', port,
                       '--baud', '115200'
             ]
@@ -287,7 +287,7 @@ class ProcessDialog(QDialog):
     def __init__(self, port, **kwargs):
         super().__init__()
 
-        self.setWindowTitle('Tasmotizing...')
+        self.setWindowTitle('Cooking your TinyGS station...')
         self.setFixedWidth(400)
 
         self.exception = None
@@ -497,7 +497,7 @@ class Tasmotizer(QDialog):
 
         self.esp_thread = None
 
-        self.setWindowTitle(f'Tasmotizer {__version__}')
+        self.setWindowTitle(f'TinyGS Uploader {__version__}')
         self.setMinimumWidth(480)
 
         self.mode = 0  # BIN file
@@ -586,7 +586,7 @@ class Tasmotizer(QDialog):
         gbFW.addWidgets([self.wFile, self.cbHackboxBin, self.cbSelfReset, self.cbErase])
 
         # Buttons
-        self.pbTasmotize = QPushButton('Tasmotize!')
+        self.pbTasmotize = QPushButton('Upload tinyGS firmware!')
         self.pbTasmotize.setFixedHeight(50)
         self.pbTasmotize.setStyleSheet('background-color: #223579;')
 
@@ -603,9 +603,9 @@ class Tasmotizer(QDialog):
         self.pbQuit.setFixedSize(QSize(50, 50))
 
         hl_btns = HLayout([50, 3, 50, 3])
-        hl_btns.addWidgets([self.pbTasmotize, self.pbConfig, self.pbGetIP, self.pbQuit])
+        hl_btns.addWidgets([self.pbTasmotize])
 
-        vl.addWidgets([gbPort, gbBackup, gbFW])
+        vl.addWidgets([gbPort])
         vl.addLayout(hl_btns)
 
         pbRefreshPorts.clicked.connect(self.refreshPorts)
@@ -640,11 +640,11 @@ class Tasmotizer(QDialog):
     def getFeeds(self):
         self.release_reply = self.nam.get(self.nrRelease)
         self.release_reply.readyRead.connect(self.appendReleaseInfo)
-        self.release_reply.finished.connect(lambda: self.rbRelease.setEnabled(True))
+        #self.release_reply.finished.connect(lambda: self.rbRelease.setEnabled(True))
 
         self.development_reply = self.nam.get(self.nrDevelopment)
         self.development_reply.readyRead.connect(self.appendDevelopmentInfo)
-        self.development_reply.finished.connect(lambda: self.rbDev.setEnabled(True))
+        #self.development_reply.finished.connect(lambda: self.rbDev.setEnabled(True))
 
     def appendReleaseInfo(self):
         self.release_data += self.release_reply.readAll()
@@ -732,11 +732,12 @@ class Tasmotizer(QDialog):
     def start_process(self):
         try:
             if self.mode == 0:
-                if len(self.file.text()) > 0:
-                    self.file_path = self.file.text()
-                    self.settings.setValue('bin_file', self.file_path)
-                else:
-                    raise NoBinFile
+                self.file_path = "https://static.tinygs.com/firmware/tinygs21021602.bin"
+                #if len(self.file.text()) > 0:
+                #    self.file_path = self.file.text()
+                #    self.settings.setValue('bin_file', self.file_path)
+                #else:
+                #    raise NoBinFile
 
             elif self.mode in (1, 2):
                 self.file_path = self.cbHackboxBin.currentData()
@@ -744,16 +745,17 @@ class Tasmotizer(QDialog):
             process_dlg = ProcessDialog(
                 self.cbxPort.currentData(),
                 file_path=self.file_path,
-                backup=self.cbBackup.isChecked(),
-                backup_size=self.cbxBackupSize.currentIndex(),
-                erase=self.cbErase.isChecked(),
-                auto_reset=self.cbSelfReset.isChecked()
+                #backup=self.cbBackup.isChecked(),
+                backup=False,
+                backup_size=0,#self.cbxBackupSize.currentIndex(),
+                erase=True,#self.cbErase.isChecked(),
+                auto_reset=True#self.cbSelfReset.isChecked()
             )
             result = process_dlg.exec_()
             if result == QDialog.Accepted:
-                message = 'Process successful!'
-                if not self.cbSelfReset.isChecked():
-                    message += ' Power cycle the device.'
+                message = 'Process successful!\nYour station is now booting, it might take arroung 40 seconds the first time.'
+                #if not self.cbSelfReset.isChecked():
+                #    message += ' Power cycle the device.'
 
                 QMessageBox.information(self, 'Done', message)
             elif result == QDialog.Rejected:
