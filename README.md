@@ -1,49 +1,45 @@
 <p align="center">
-<img src=https://user-images.githubusercontent.com/11555742/69891714-ec14ca00-12fe-11ea-9140-92842fa1bff9.jpg width=500>
+<img src="/doc/images/logo.png" width=500>
 </p>
 
-[![GitHub All Releases](https://img.shields.io/github/downloads/tasmota/tasmotizer/total?style=for-the-badge)](https://github.com/tasmota/tasmotizer/releases)
-[![https://pypi.org/project/tasmotizer/](https://img.shields.io/pypi/dw/tasmotizer?logo=pypi&style=for-the-badge)](https://pypi.org/project/tasmotizer)
-[![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/tasmota/tasmotizer?style=for-the-badge)](https://github.com/tasmota/tasmotizer/releases)
-[![https://www.buymeacoffee.com/eYmkLXO](https://img.shields.io/badge/Donate-Buy%20me%20a%20coffee-orange?style=for-the-badge)](https://www.buymeacoffee.com/eYmkLXO)
+This is a one click uploader tool to make really simple the task of flashing ESP32 boards. It is completelly based on the <a href="https://github.com/tasmota/tasmotizer">Tasmotizer</a> project and uses the great <a href="https://github.com/espressif/esptool">ESPtool</a> from Espressif under the hood, and all required settings by default.
 
-The full-featured flashing tool for Tasmota. With the great [ESPtool](https://github.com/espressif/esptool) from Espressif under the hood, and all required settings by default.
+This document will guide you through the process os making your own one click uploader for your project.
 
-## Features
+## How to generate a Tiny Uploader
 
- - Automatic backup of current ESP image before flashing: in case you want to return to manufacturer firmware<br/>
- Now supporting backup sizes up to 16MB
- 
- - Flash local .bin images, or simply select from release or development images: it will download them automatically 
- 
- - Send configuration to flashed device via serial: one-click configure of Wifi (including recovery AP), MQTT, Module and/or Template  
- 
- - Single-click get the IP of your device (DISCLAIMER: this functionality depends on the current state of your device, so it might require a few tries to get the proper result)
- 
- - Dark theme: proven to increase flashing speed and reliability 
- 
-## Installation and how to run
+In order to provide always the last version of your firmware, the Tiny Uploader automatically downloads a firmware binary file from the internet and flashes it. So you will have to upload it somewhere and get an accesible URL.
 
- - Option 1: [get Windows  standalone executable](https://github.com/tasmota/tasmotizer/releases) (thanks @Jason2866):<br/>
- `tasmotizer.exe` (64bit)<br/>
- `tasmotizer-x86.exe` (32bit)<br/>
- In the odd case of your antivirus going haywire over that application, it's a [false positive](https://github.com/pyinstaller/pyinstaller/issues/3802).
+ 1. Clone de repository and make sure you have python3 and pip3 installed on your computer.
+ 2. Generate the header logo file: The header logo file is defined in binary on the Banner.py file. Thankfully we provide a script to generate that file for you from a png file. The origianl photo is a 558x300px PNG with transparency. Execute `python3 generateBanner.py <yourfile.png>` and it will generate a new file Banner.py for you.
+ 3. Edit the `firmwareURL.py` file and change the URL to the url of your firmware.
+ 4. Your project is ready. Execute `pip3 install -r requirements.txt` followed by `python3 tasmotizer.py` and you can already test your Tiny Uploader. 
  
- - Option 2: Install from PyPI using pip:<br/>
- Upgrade pip and wheel packages: `pip3 install --upgrade pip wheel`<br/>
- Install tasmotizer: `pip3 install tasmotizer`   
- Then simply run `tasmotizer.py` from the shell/command line
- 
- - Option 3: Clone the repo, `pip3 install -r requirements.txt` followed by `python3 tasmotizer.py ` and flash away!
- 
+## Ejecutable file
+
+As you might have noticed that the project contains many files and you need to execute it using python. This is probably not be the best idea if you want to publish your uploader and make it easy for your users to flash their boards. Thankfully there is a way to compile all your files into a single executable for Linux, Windows and Mac.
+
+To do so, you need to install <a href="https://www.pyinstaller.org/">PyInstaller</a>. This tool will compress all your python files and generate an standalone executable file. Be aware that PyInstaller is not cross-platform, that means that the executable generated will be only compatible with the operating system you are executing it in. So if you want to compile it for Linux, Windows and Mac you will need a machine with each operating system.
+
+Once you are on your target operating system, execute the following comand and a single executable file will be generated for you. 
+```pyinstaller --name="My_Tiny_Uploader.exe" --windowed --onefile tasmotizer.py```
+
+Alternatively you can also specify a icon file that you designed, so your executble looks even cooler with the following command: 
+```pyinstaller --name="My_Tiny_Uploader.exe" --windowed --onefile --icon=app.ico tasmotizer.py```
+
+Be aware that icon files need to have specific characteristics for every operating system. Also, operating systems usually cache icons so once an icon is atached to you executable you will probably no see it change even if you execute the command a second time. For more info please refer to the PyInstaller documentation.
+
+## Aditional notes
+Some web browsers will detect unsigned, newly generated executable files as potentially dangerous and might block them. Signing your executable might be a good idea so that users can also verify the authorsip.
+
 ## Screenshots
 
 <p align="center">
-    <img src=https://user-images.githubusercontent.com/24528715/93748447-96e0d680-fbf8-11ea-9647-9d303cda0ea7.png>    
+    <img src="/doc/images/TinyUploader1.png">    
 </p>
 
 <p align="center">
-    <img src=https://user-images.githubusercontent.com/24528715/93748408-82044300-fbf8-11ea-89c5-891065e52430.png>
+    <img src="/doc/images/TinyUploader2.png">    
 </p>
 
-(c) 2019 Jacek Ziółkowski https://github.com/jziolkowski
+(c) 2021 Oscar <4m1g0> https://github.com/4m1g0
