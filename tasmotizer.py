@@ -18,6 +18,7 @@ from PyQt5.QtWidgets import QApplication, QDialog, QLineEdit, QPushButton, QComb
     QButtonGroup, QFileDialog, QProgressBar, QLabel, QMessageBox, QDialogButtonBox, QGroupBox, QFormLayout, QStatusBar
 
 import banner
+import firmwareURL
 
 from gui import HLayout, VLayout, GroupBoxH, GroupBoxV, SpinBox, dark_palette
 from utils import MODULES, NoBinFile, NetworkError
@@ -732,7 +733,7 @@ class Tasmotizer(QDialog):
     def start_process(self):
         try:
             if self.mode == 0:
-                self.file_path = "https://static.tinygs.com/firmware/tinygs21021602.bin"
+                self.file_path = firmwareURL.URL
                 #if len(self.file.text()) > 0:
                 #    self.file_path = self.file.text()
                 #    self.settings.setValue('bin_file', self.file_path)
