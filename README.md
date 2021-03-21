@@ -10,7 +10,7 @@ This document will guide you through the process of making your own one click up
 
 In order to provide always the last version of your firmware, the Tiny Uploader automatically downloads a firmware binary file from the internet and flashes it. So you will have to upload it somewhere and get an accesible URL.
 
- 1. Clone de repository and make sure you have python3 and pip3 installed on your computer.
+ 1. Clone the repository and make sure you have python3 and pip3 installed on your computer.
  2. Generate the header logo file: The header logo file is defined in binary on the Banner.py file. Thankfully we provide a script to generate that file from a png file. The origianl photo is a 558x300px PNG with transparency. Execute `python3 generateBanner.py <yourfile.png>` and it will generate a new file Banner.py for you.
  3. Edit the `firmwareURL.py` file and change the URL to the url of your firmware bin file.
  4. Your project is ready. Execute `pip3 install -r requirements.txt` followed by `python3 tasmotizer.py` and you can already test your Tiny Uploader. 
