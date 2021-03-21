@@ -2,7 +2,7 @@
 <img src="/doc/images/uploader_logo.png" width=500>
 </p>
 
-This is a one click uploader tool to make the task of flashing ESP32 boards really simple. It is completelly based on the <a href="https://github.com/tasmota/tasmotizer">Tasmotizer</a> project and uses the great <a href="https://github.com/espressif/esptool">ESPtool</a> from Espressif under the hood, and all required settings by default.
+This is a one click uploader tool to make the task of flashing ESP32 boards really simple. It is completely based on the <a href="https://github.com/tasmota/tasmotizer">Tasmotizer</a> project and uses the great <a href="https://github.com/espressif/esptool">ESPtool</a> from Espressif under the hood, and all required settings by default.
 
 This document will guide you through the process of making your own one click uploader for your project.
 
