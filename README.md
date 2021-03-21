@@ -15,7 +15,7 @@ In order to provide always the last version of your firmware, the Tiny Uploader 
  3. Edit the `firmwareURL.py` file and change the URL to the url of your firmware bin file.
  4. Your project is ready. Execute `pip3 install -r requirements.txt` followed by `python3 tasmotizer.py` and you can already test your Tiny Uploader. 
  
-## Ejecutable file
+## Executable file
 
 As you might have noticed that the project contains many files and you need to execute it using python. This is probably not be the best idea if you want to publish your uploader and make it easy for your users to flash their boards. Thankfully there is a way to compile all your files into a single executable for Linux, Windows and Mac.
 
