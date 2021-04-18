@@ -361,6 +361,7 @@ class ProcessDialog(QDialog):
         self._action_widgets['download'].setValue(recv//total*100)
 
     def download_bin(self):
+        self.nrBinFile.setAttribute(QNetworkRequest.FollowRedirectsAttribute, True)
         self.nrBinFile.setUrl(QUrl(self.file_path))
         self.bin_reply = self.nam.get(self.nrBinFile)
         self.bin_reply.readyRead.connect(self.appendBinFile)
