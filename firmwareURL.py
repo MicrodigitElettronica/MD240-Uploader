@@ -1,1 +1,1 @@
-URL = "https://github.com/G4lile0/tinyGS/releases/download/2103201/firmware_2103201-OTA.bin"
+URL = "https://github.com/MicrodigitElettronica/MA60/releases/latest/download/MA60_full.bin"

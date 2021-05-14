@@ -23,7 +23,7 @@ import firmwareURL
 from gui import HLayout, VLayout, GroupBoxH, GroupBoxV, SpinBox, dark_palette
 from utils import MODULES, NoBinFile, NetworkError
 
-__version__ = '0.1'
+__version__ = '0.1.1'
 
 BINS_URL = 'http://ota.tasmota.com'
 
@@ -288,7 +288,7 @@ class ProcessDialog(QDialog):
     def __init__(self, port, **kwargs):
         super().__init__()
 
-        self.setWindowTitle('Cooking your TinyGS station...')
+        self.setWindowTitle('Cooking your MA60 board...')
         self.setFixedWidth(400)
 
         self.exception = None
@@ -499,7 +499,7 @@ class Tasmotizer(QDialog):
 
         self.esp_thread = None
 
-        self.setWindowTitle(f'TinyGS Uploader {__version__}')
+        self.setWindowTitle(f'MA60 Uploader {__version__}')
         self.setMinimumWidth(480)
 
         self.mode = 0  # BIN file
@@ -562,12 +562,12 @@ class Tasmotizer(QDialog):
         self.cbHackboxBin.setVisible(False)
         self.cbHackboxBin.setEnabled(False)
 
-        self.cbSelfReset = QCheckBox('Self-resetting device (NodeMCU, Wemos)')
+        self.cbSelfReset = QCheckBox('Self-resetting device...')
         self.cbSelfReset.setToolTip('Check if your device has self-resetting capabilities supported by esptool')
 
         gbBackup = GroupBoxV('Backup')
         self.cbBackup = QCheckBox('Save original firmware')
-        self.cbBackup.setToolTip('Firmware backup is ESPECIALLY recommended when you flash a Sonoff, Tuya, Shelly etc. for the first time.\nWithout a backup you will not be able to restore the original functionality.')
+        self.cbBackup.setToolTip('Firmware backup is recommended!\nWithout a backup you will not be able to restore the original functionality.')
 
         self.cbxBackupSize = QComboBox()
         self.cbxBackupSize.addItems([f'{2 ** s}MB' for s in range(5)])
@@ -582,13 +582,13 @@ class Tasmotizer(QDialog):
         gbBackup.addLayout(hl_backup_size)
 
         self.cbErase = QCheckBox('Erase before flashing')
-        self.cbErase.setToolTip('Erasing previous firmware ensures all flash regions are clean for Tasmota, which prevents many unexpected issues.\nIf unsure, leave enabled.')
+        self.cbErase.setToolTip('Erasing previous firmware ensures all flash regions are clean, which prevents many unexpected issues.\nIf unsure, leave enabled.')
         self.cbErase.setChecked(True)
 
         gbFW.addWidgets([self.wFile, self.cbHackboxBin, self.cbSelfReset, self.cbErase])
 
         # Buttons
-        self.pbTasmotize = QPushButton('Upload tinyGS firmware!')
+        self.pbTasmotize = QPushButton('Upload MA60 firmware!')
         self.pbTasmotize.setFixedHeight(50)
         self.pbTasmotize.setStyleSheet('background-color: #223579;')
 
@@ -755,7 +755,7 @@ class Tasmotizer(QDialog):
             )
             result = process_dlg.exec_()
             if result == QDialog.Accepted:
-                message = 'Process successful!\nYour station is now booting, it might take arroung 40 seconds the first time.'
+                message = 'Process successful!\nYour board is now booting, it might take arroung 40 seconds the first time.'
                 #if not self.cbSelfReset.isChecked():
                 #    message += ' Power cycle the device.'
 
