@@ -288,7 +288,7 @@ class ProcessDialog(QDialog):
     def __init__(self, port, **kwargs):
         super().__init__()
 
-        self.setWindowTitle('Cooking your MA60 board...')
+        self.setWindowTitle('Cooking your MD240 board...')
         self.setFixedWidth(400)
 
         self.exception = None
@@ -499,7 +499,7 @@ class Tasmotizer(QDialog):
 
         self.esp_thread = None
 
-        self.setWindowTitle(f'MA60 Uploader {__version__}')
+        self.setWindowTitle(f'MD240 Uploader {__version__}')
         self.setMinimumWidth(480)
 
         self.mode = 0  # BIN file
@@ -588,7 +588,7 @@ class Tasmotizer(QDialog):
         gbFW.addWidgets([self.wFile, self.cbHackboxBin, self.cbSelfReset, self.cbErase])
 
         # Buttons
-        self.pbTasmotize = QPushButton('Upload MA60 firmware!')
+        self.pbTasmotize = QPushButton('Upload MD240 firmware!')
         self.pbTasmotize.setFixedHeight(50)
         self.pbTasmotize.setStyleSheet('background-color: #223579;')
 
